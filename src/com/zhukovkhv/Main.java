@@ -7,9 +7,16 @@ public class Main {
     public static void main(String[] args) {
         Data in = new Data();
 
-        System.out.println(in.convertOper());
-        System.out.println(in.convertRimOper());
 
+        if (in.convertArabDataA() >= 1 && in.convertArabDataB() >= 1) {
+            System.out.println(in.convertOper());
+        }
+        if (in.convertRimDataA() >= 1 && in.convertRimDataB() >= 1) {
+            System.out.println(in.convertRimOper());
+        }
+        if (in.convertArabDataA() >= 1 && in.convertArabDataB() == 0 || in.convertArabDataA() == 0 && in.convertArabDataB() >= 1) {
+            System.out.println("Введите только арабские или только римские числа от 1(I) до 10(X)");
+        }
     }
 }
 
@@ -22,54 +29,82 @@ class Data {
     String equation = enter.nextLine();
     String[] array = equation.split(" ");
 
-    int a, b, oper;
+    int a, rimA, b, rimB, oper;
     String rimoper;
 
-    public int convertDataA(){
+    public int convertArabDataA(){
         try {
         for (int i = 0; i <= arabarray.length; i++) {
                 if (array[0].equals(arabarray[i])) {
                     a = i + 1;
                     return a;
-                } else
-                if (array[0].equals(rimarray[i])) {
-                    a = i + 1;
-                    return a;
                 }
         }}
         catch (ArrayIndexOutOfBoundsException ex){
-            System.out.println("Введите первое число от 1(I) до 10(X)");
+            a = 0;
         }
     return a;
     }
 
-    public int convertDataB(){
+    public int convertArabDataB(){
         try{
-        for (int i = 0; i <= arabarray.length; i++) {
-            if (array[2].equals(arabarray[i])) {
-                b = i + 1;
-                return b;
-            } else
-            if (array[2].equals(rimarray[i])) {
-                b =i + 1;
-                return b;
-            }
-        }}
+            for (int i = 0; i <= arabarray.length; i++) {
+                if (array[2].equals(arabarray[i])) {
+                    b = i + 1;
+                    return b;
+                }
+            }}
         catch (ArrayIndexOutOfBoundsException ex){
-            System.out.println("Введите второе число от 1(I) до 10(X)");
+            b = 0;
         }
     return b;
     }
 
+    public int convertRimDataA(){
+        try {
+            for (int i = 0; i <= rimarray.length; i++) {
+                if (array[0].equals(rimarray[i])) {
+                    rimA = i + 1;
+                    return rimA;
+                }
+            }}
+        catch (ArrayIndexOutOfBoundsException ex){
+            rimA = 0;
+        }
+    return rimA;
+    }
+
+    public int convertRimDataB(){
+        try{
+            for (int i = 0; i <= rimarray.length; i++) {
+                if (array[2].equals(rimarray[i])) {
+                   rimB = i + 1;
+                   return rimB;
+                }
+            }}
+        catch (ArrayIndexOutOfBoundsException ex){
+            rimB = 0;
+        }
+    return rimB;
+    }
+
     public int convertOper(){
-        a = convertDataA();
-        b = convertDataB();
+        if(a >= 1 && b >= 1){
         switch (array[1]) {
             case "+" -> oper = a + b;
             case "-" -> oper = a - b;
             case "*" -> oper = a * b;
             case "/" -> oper = a / b;
             default -> System.out.println("Недопустимое выражение");
+        }} else
+        if(rimA >= 1 && rimB >= 1){
+        switch (array[1]) {
+            case "+" -> oper = rimA + rimB;
+            case "-" -> oper = rimA - rimB;
+            case "*" -> oper = rimA * rimB;
+            case "/" -> oper = rimA / rimB;
+            default -> System.out.println("Недопустимое выражение");
+            }
         }
     return oper;
     }
